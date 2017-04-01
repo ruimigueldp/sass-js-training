@@ -1,11 +1,14 @@
 # Pug + ES6 + SCSS Boilerplate
 
+Boilerplate to rapidly get started with static sites.
+
 ## Features
 
 * Pug templates
 * ES6 w/ ESlint
 * SCSS w/ SMACCS
 * Browsersync
+* Gulp
 * Image minification
 * SVG sprite generation
 * Normalize.css
