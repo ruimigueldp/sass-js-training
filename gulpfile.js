@@ -14,34 +14,10 @@ var postcss     = require('gulp-postcss')
 var autoprefixer = require('autoprefixer')
 var bourbon     = require("bourbon").includePaths
 var sassGlob    = require('gulp-sass-glob')
-var responsive  = require('gulp-responsive')
 var watch       = require('gulp-watch')
 var plumber     = require('gulp-plumber')
-
-var responsiveConfig = {
-  '*': [{
-    width: 480,
-    quality: 95,
-    rename: {
-      suffix: '-small',
-      extname: '.jpg',
-    },
-  }, {
-    width: 768,
-    quality: 95,
-    rename: {
-      suffix: '-medium',
-      extname: '.jpg',
-    },
-  }, {
-    width: 1400,
-    quality: 95,
-    rename: {
-      suffix: '-large',
-      extname: '.jpg',
-    },
-  }]
-}
+var imagemin    = require('gulp-imagemin')
+var eslint      = require('gulp-eslint')
 
 var svgConfig = {
   mode: {
@@ -61,12 +37,9 @@ var sassConfig = {
 }
 
 gulp.task('images', function () {
-  return gulp.src('src/images/*.{jpg,png}')
+  return gulp.src('src/images/*.{jpg,png,gif}')
     .pipe(plumber())
-    .pipe(responsive( responsiveConfig, {
-      silent: true,
-      errorOnUnusedImage: false
-    } ))
+    .pipe(imagemin())
     .pipe(gulp.dest('dist/images'))
 })
 
@@ -84,7 +57,13 @@ gulp.task('pug-watch', ['pug'], function (done) {
   done()
 })
 
-gulp.task('js', function () {
+gulp.task('lint', function () {
+  return gulp.src('src/js/main.js')
+    .pipe(eslint())
+    .pipe(eslint.format())
+})
+
+gulp.task('js', ['lint'], function () {
   return browserify({ entries: './src/js/main.js', debug: true })
     .transform("babelify", { presets: ["es2015"] })
     .bundle()
