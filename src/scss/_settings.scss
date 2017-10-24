@@ -6,11 +6,67 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.content-title {
-  text-align: center;
+iframe {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
-.title {
-  margin: 0;
+.alert {
+  color: $alert;
+}
+
+h1 {
+  font-size: 100px;
+  text-shadow: 10px 10px 0 $shadow;
+}
+
+.content-title {
+  padding: 5%;
   text-align: center;
+
+  .details {
+    .year {
+      color: $details;
+    }
+
+    .minutes {
+      color: $details;
+    }
+  }
+}
+
+.master {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15%;
+
+  .main {
+    display: flex;
+    flex: 0 1 50%;
+    flex-direction: column;
+    text-align: center;
+
+    .input-division {
+      flex: 0 1 30%;
+    }
+
+    .screen {
+      flex: 0 1 70%;
+      float: none;
+      height: 0;
+      margin-bottom: 25px;
+      margin-top: 25px;
+      padding-bottom: 56.25%;
+      padding-top: 25px;
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  .off {
+    flex: 0 1 50%;
+  }
 }
