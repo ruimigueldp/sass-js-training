@@ -38,15 +38,15 @@ const sassConfig = {
   includePaths: bourbon.includePaths
 }
 
-gulp.task('images', () => 
+gulp.task('images', () =>
   gulp.src('src/images/*.{jpg,png,gif}')
     .pipe(plumber())
     .pipe(imagemin())
     .pipe(gulp.dest('dist/images'))
 )
 
-gulp.task('pug', () => 
-  gulp.src('src/*.pug')
+gulp.task('pug', () =>
+  gulp.src('src/templates/pages/*.pug')
     .pipe(plumber())
     .pipe(pug({
       data: JSON.parse(fs.readFileSync('./src/data.json'))
@@ -59,13 +59,13 @@ gulp.task('pug-watch', ['pug'], (done) => {
   done()
 })
 
-gulp.task('lint', () => 
+gulp.task('lint', () =>
   gulp.src('src/js/main.js')
     .pipe(eslint())
     .pipe(eslint.format())
 )
 
-gulp.task('js', ['lint'], () => 
+gulp.task('js', ['lint'], () =>
   browserify({ entries: './src/js/main.js', debug: true })
     .transform("babelify", { presets: ["es2015"] })
     .bundle()
@@ -79,7 +79,7 @@ gulp.task('js', ['lint'], () =>
     .pipe(browserSync.stream())
 )
 
-gulp.task('sass', () => 
+gulp.task('sass', () =>
   gulp.src("src/scss/main.scss")
     .pipe(plumber())
     .pipe(sassGlob())
@@ -89,7 +89,7 @@ gulp.task('sass', () =>
     .pipe(browserSync.stream())
 )
 
-gulp.task('svg', () => 
+gulp.task('svg', () =>
   gulp.src('src/svg/**/*.svg')
     .pipe(plumber())
     .pipe(svgSprite(svgConfig))
@@ -106,7 +106,7 @@ gulp.task('serve', () => {
   gulp.watch("src/scss/**/*.scss", ['sass'])
   gulp.watch("src/svg/**/*.svg", ['svg'])
   gulp.watch("src/js/**/*.js", ['js'])
-  gulp.watch('src/**/*.pug', ['pug-watch'])
+  gulp.watch('src/templates/**/*.pug', ['pug-watch'])
   gulp.watch('src/data.json', ['pug-watch'])
   gulp.watch('src/images/**/*.{jpg,jpeg,png}', ['images'])
 });
@@ -117,7 +117,7 @@ gulp.task('default', ['pug', 'js', 'sass', 'svg', 'images', 'serve'])
 //Production
 gulp.task('prod', ['sitemap', 'js:prod', 'sass:prod', 'svg', 'images'])
 
-gulp.task('js:prod', () => 
+gulp.task('js:prod', () =>
   browserify({ entries: './src/js/main.js', debug: false })
     .transform("babelify", { presets: ["es2015"] })
     .bundle()
@@ -127,7 +127,7 @@ gulp.task('js:prod', () =>
     .pipe(gulp.dest('./dist/js'))
 )
 
-gulp.task('sass:prod', () => 
+gulp.task('sass:prod', () =>
   gulp.src("src/scss/main.scss")
     .pipe(sassGlob())
     .pipe(sass({

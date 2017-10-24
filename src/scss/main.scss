@@ -1,8 +1,9 @@
 @import 'variables';
 @import 'mixins';
 @import 'normalize/normalize';
+@import 'settings';
 @import 'bourbon';
-@import 'base/**/*.scss';
-@import 'layout/**/*.scss';
-@import 'module/**/*.scss';
-@import 'state/**/*.scss';
+@import 'base/**/*';
+@import 'layout/**/*';
+@import 'module/**/*';
+@import 'state/**/*';
